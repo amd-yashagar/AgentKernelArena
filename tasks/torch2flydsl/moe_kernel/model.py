@@ -95,5 +95,7 @@ def get_inputs():
 
 
 def get_init_inputs():
-    # AKA convention: [args_list, kwargs_dict].
-    return [[], {"model_dim": 7168, "inter_dim": 256, "experts": 257, "topk": 9}]
+    # Flat positional args for Model(*get_init_inputs()), matching
+    # Model.__init__(model_dim, inter_dim, experts, topk, activation="silu").
+    # dsv3 default (D=7168, I=256, E=257, topk=9); activation stays "silu".
+    return [7168, 256, 257, 9]
