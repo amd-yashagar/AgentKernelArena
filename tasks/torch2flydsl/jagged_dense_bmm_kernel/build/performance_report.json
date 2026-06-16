@@ -1,0 +1,92 @@
+[
+  {
+    "test_case_id": "test_case_0",
+    "execution_time_ms": 0.10156100243330002,
+    "shape": [
+      4,
+      492,
+      128,
+      128
+    ],
+    "params": {
+      "B": 4,
+      "total_M": 492,
+      "N": 128,
+      "K": 128,
+      "dtype": "bf16"
+    },
+    "tflops": 0.1587406151351056
+  },
+  {
+    "test_case_id": "test_case_1",
+    "execution_time_ms": 0.09756100177764893,
+    "shape": [
+      3,
+      512,
+      128,
+      128
+    ],
+    "params": {
+      "B": 3,
+      "total_M": 512,
+      "N": 128,
+      "K": 128,
+      "dtype": "bf16"
+    },
+    "tflops": 0.17196641787501235
+  },
+  {
+    "test_case_id": "test_case_2",
+    "execution_time_ms": 0.0979200005531311,
+    "shape": [
+      5,
+      480,
+      128,
+      128
+    ],
+    "params": {
+      "B": 5,
+      "total_M": 480,
+      "N": 128,
+      "K": 128,
+      "dtype": "bf16"
+    },
+    "tflops": 0.16062745007303883
+  },
+  {
+    "test_case_id": "test_case_3",
+    "execution_time_ms": 0.0976409986615181,
+    "shape": [
+      8,
+      820,
+      128,
+      128
+    ],
+    "params": {
+      "B": 8,
+      "total_M": 820,
+      "N": 128,
+      "K": 128,
+      "dtype": "bf16"
+    },
+    "tflops": 0.2751893197359298
+  },
+  {
+    "test_case_id": "test_case_4",
+    "execution_time_ms": 0.09888099879026413,
+    "shape": [
+      2,
+      160,
+      128,
+      128
+    ],
+    "params": {
+      "B": 2,
+      "total_M": 160,
+      "N": 128,
+      "K": 128,
+      "dtype": "bf16"
+    },
+    "tflops": 0.05302211814345282
+  }
+]

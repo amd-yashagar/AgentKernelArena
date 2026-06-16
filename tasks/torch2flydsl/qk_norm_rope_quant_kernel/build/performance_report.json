@@ -1,0 +1,116 @@
+[
+  {
+    "test_case_id": "test_case_0",
+    "execution_time_ms": 0.06380099803209305,
+    "shape": [
+      1,
+      16,
+      512,
+      64
+    ],
+    "params": {
+      "T": 1,
+      "H": 16,
+      "D": 512,
+      "RD": 64,
+      "group_size": 64,
+      "dtype": "bf16"
+    },
+    "gbps": 0.561746698413273
+  },
+  {
+    "test_case_id": "test_case_1",
+    "execution_time_ms": 0.06384100019931793,
+    "shape": [
+      16,
+      16,
+      512,
+      64
+    ],
+    "params": {
+      "T": 16,
+      "H": 16,
+      "D": 512,
+      "RD": 64,
+      "group_size": 64,
+      "dtype": "bf16"
+    },
+    "gbps": 8.741717677630657
+  },
+  {
+    "test_case_id": "test_case_2",
+    "execution_time_ms": 0.06363999843597412,
+    "shape": [
+      64,
+      16,
+      512,
+      64
+    ],
+    "params": {
+      "T": 64,
+      "H": 16,
+      "D": 512,
+      "RD": 64,
+      "group_size": 32,
+      "dtype": "bf16"
+    },
+    "gbps": 35.029039201545
+  },
+  {
+    "test_case_id": "test_case_3",
+    "execution_time_ms": 0.06300099939107895,
+    "shape": [
+      256,
+      16,
+      512,
+      64
+    ],
+    "params": {
+      "T": 256,
+      "H": 16,
+      "D": 512,
+      "RD": 64,
+      "group_size": 128,
+      "dtype": "bf16"
+    },
+    "gbps": 141.48854916835216
+  },
+  {
+    "test_case_id": "test_case_4",
+    "execution_time_ms": 0.06268099695444107,
+    "shape": [
+      64,
+      128,
+      512,
+      64
+    ],
+    "params": {
+      "T": 64,
+      "H": 128,
+      "D": 512,
+      "RD": 64,
+      "group_size": 64,
+      "dtype": "bf16"
+    },
+    "gbps": 269.76775771914305
+  },
+  {
+    "test_case_id": "test_case_5",
+    "execution_time_ms": 0.08271999657154083,
+    "shape": [
+      512,
+      128,
+      512,
+      64
+    ],
+    "params": {
+      "T": 512,
+      "H": 128,
+      "D": 512,
+      "RD": 64,
+      "group_size": 64,
+      "dtype": "bf16"
+    },
+    "gbps": 1635.2433946610881
+  }
+]

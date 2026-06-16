@@ -1,0 +1,86 @@
+[
+  {
+    "test_case_id": "test_case_0",
+    "execution_time_ms": 0.052639998495578766,
+    "shape": [
+      16,
+      256,
+      8
+    ],
+    "params": {
+      "M": 16,
+      "E": 256,
+      "topk": 8
+    }
+  },
+  {
+    "test_case_id": "test_case_1",
+    "execution_time_ms": 0.05152000114321709,
+    "shape": [
+      8,
+      256,
+      8
+    ],
+    "params": {
+      "M": 8,
+      "E": 256,
+      "topk": 8
+    }
+  },
+  {
+    "test_case_id": "test_case_2",
+    "execution_time_ms": 0.05139999836683273,
+    "shape": [
+      16,
+      32,
+      2
+    ],
+    "params": {
+      "M": 16,
+      "E": 32,
+      "topk": 2
+    }
+  },
+  {
+    "test_case_id": "test_case_3",
+    "execution_time_ms": 0.05132000148296356,
+    "shape": [
+      64,
+      32,
+      2
+    ],
+    "params": {
+      "M": 64,
+      "E": 32,
+      "topk": 2
+    }
+  },
+  {
+    "test_case_id": "test_case_4",
+    "execution_time_ms": 0.05236100032925606,
+    "shape": [
+      16,
+      8,
+      2
+    ],
+    "params": {
+      "M": 16,
+      "E": 8,
+      "topk": 2
+    }
+  },
+  {
+    "test_case_id": "test_case_5",
+    "execution_time_ms": 0.052000001072883606,
+    "shape": [
+      64,
+      8,
+      2
+    ],
+    "params": {
+      "M": 64,
+      "E": 8,
+      "topk": 2
+    }
+  }
+]

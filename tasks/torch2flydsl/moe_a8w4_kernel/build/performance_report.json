@@ -1,0 +1,34 @@
+[
+  {
+    "test_case_id": "test_case_0",
+    "execution_time_ms": 81.71868133544922,
+    "shape": [
+      16,
+      7168,
+      256
+    ],
+    "params": {
+      "tokens": 16,
+      "model_dim": 7168,
+      "inter_dim": 256,
+      "experts": 384,
+      "topk": 8
+    }
+  },
+  {
+    "test_case_id": "test_case_1",
+    "execution_time_ms": 163.2899932861328,
+    "shape": [
+      32,
+      7168,
+      512
+    ],
+    "params": {
+      "tokens": 32,
+      "model_dim": 7168,
+      "inter_dim": 512,
+      "experts": 385,
+      "topk": 7
+    }
+  }
+]
