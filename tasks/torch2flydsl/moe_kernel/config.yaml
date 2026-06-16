@@ -26,7 +26,7 @@ source_origin:
     - aiter/ops/flydsl/moe_kernels.py
   note: >-
     PyTorch reference in model.py (quantized a4w4 fused MoE). FlyDSL target in
-    kernel.py is a SELF-CONTAINED INLINE copy of the real AITER a4w4 two-stage
+    kernel.py inlines the AITER a4w4 two-stage
     device kernels: compile_mixed_moe_gemm1 (stage1 gate/up GEMM + fused
     silu-gated activation) and compile_mixed_moe_gemm2 (stage2 down GEMM +
     weighted top-k combine) from mixed_moe_gemm_2stage.py, with their device

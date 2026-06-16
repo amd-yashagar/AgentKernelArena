@@ -2,10 +2,9 @@
 # Copyright(C) [2026] Advanced Micro Devices, Inc. All rights reserved.
 """Test harness for the torch2flydsl hgemm task.
 
-Builds the PyTorch reference from model.py (KernelBench `Model`/`get_inputs`/
-`get_init_inputs`) and runs the FlyDSL kernel from kernel.py over a set of real
-AITER GEMM shapes, comparing for correctness and benchmarking vs a torch
-baseline.
+Builds the PyTorch reference from model.py (`Model`/`get_inputs`/
+`get_init_inputs`) and runs the FlyDSL kernel from kernel.py over a set of GEMM
+shapes, comparing for correctness and benchmarking against a torch baseline.
 
 Modes:
   --correctness     compare FlyDSL output to the PyTorch Model reference
@@ -50,10 +49,8 @@ def _load_module(kernel_dir, filename, alias):
 
 _KERNEL_DIR = _resolve_kernel_dir()
 
-# Real bf16 GEMM shapes (provenance in config.json / aiter configs):
-#   (M, N, K) + per-case FlyDSL tiling that satisfies the wrapper constraints.
-# bf16_untuned_gemm.csv: N=256, K=5120.
-# dsv3_bf16_untuned_gemm.csv: (3072,1536) and (2112,7168, needs tile_n=64).
+# bf16 GEMM shapes: (M, N, K) plus per-case FlyDSL tiling that satisfies the
+# kernel's tile constraints.
 SHAPES = [
     {"name": "untuned_m64_n256_k5120", "m": 64, "n": 256, "k": 5120},
     {"name": "untuned_m256_n256_k5120", "m": 256, "n": 256, "k": 5120},
@@ -62,8 +59,7 @@ SHAPES = [
     {"name": "dsv3_m64_n2112_k7168_tn64", "m": 64, "n": 2112, "k": 7168, "tile_n": 64},
 ]
 
-# hgemm is a plain bf16 GEMM: a tight-ish tolerance (mirrors the AITER split-K
-# precision test) is appropriate.
+# bf16 GEMM element-wise tolerance.
 ATOL, RTOL, PASS_PCT = 1e-2, 1e-2, 99.9
 SEED = 20260401
 TILING_KEYS = ("tile_m", "tile_n", "tile_k", "split_k", "block_m_warps", "block_n_warps")

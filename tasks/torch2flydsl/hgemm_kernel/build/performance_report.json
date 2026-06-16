@@ -1,7 +1,7 @@
 [
   {
     "test_case_id": "test_case_0",
-    "execution_time_ms": 0.1066410019993782,
+    "execution_time_ms": 0.10620100051164627,
     "shape": [
       64,
       256,
@@ -13,11 +13,11 @@
       "K": 5120,
       "dtype": "bf16"
     },
-    "tflops": 1.5732425319951349
+    "tflops": 1.5797606349443165
   },
   {
     "test_case_id": "test_case_1",
-    "execution_time_ms": 0.10676100105047226,
+    "execution_time_ms": 0.1061210036277771,
     "shape": [
       256,
       256,
@@ -29,11 +29,11 @@
       "K": 5120,
       "dtype": "bf16"
     },
-    "tflops": 6.285896848070361
+    "tflops": 6.32380600501919
   },
   {
     "test_case_id": "test_case_2",
-    "execution_time_ms": 0.10708100348711014,
+    "execution_time_ms": 0.10652100294828415,
     "shape": [
       512,
       256,
@@ -45,11 +45,11 @@
       "K": 5120,
       "dtype": "bf16"
     },
-    "tflops": 12.534223964025182
+    "tflops": 12.60011868881507
   },
   {
     "test_case_id": "test_case_3",
-    "execution_time_ms": 0.040320999920368195,
+    "execution_time_ms": 0.03996099904179573,
     "shape": [
       128,
       3072,
@@ -61,11 +61,11 @@
       "K": 1536,
       "dtype": "bf16"
     },
-    "tflops": 29.95857132476018
+    "tflops": 30.228462274844013
   },
   {
     "test_case_id": "test_case_4",
-    "execution_time_ms": 0.11348100006580353,
+    "execution_time_ms": 0.11368100345134735,
     "shape": [
       64,
       2112,
@@ -77,6 +77,6 @@
       "K": 7168,
       "dtype": "bf16"
     },
-    "tflops": 17.0757082408188
+    "tflops": 17.04566628697394
   }
 ]

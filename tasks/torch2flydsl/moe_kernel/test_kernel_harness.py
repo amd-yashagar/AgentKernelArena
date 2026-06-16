@@ -1,24 +1,16 @@
 #!/usr/bin/env python3
 # Copyright(C) [2026] Advanced Micro Devices, Inc. All rights reserved.
-"""Test harness for the torch2flydsl moe task (apple-to-apple, tight tolerance).
+"""Correctness and performance harness for the a4w4 fused MoE task.
 
-`model.py` is a FAITHFUL QUANTIZED emulation of the a4w4 path (it quantizes to
-mxfp4 + e8m0 per_1x32 scales, does the dequant GEMMs in fp32, re-quantizes the
-stage-1 result, etc.), so it is numerically equivalent to the FlyDSL kernel up
-to genuine bit-level fp4/bf16 rounding. The reference and the kernel SHARE the
-same top-k routing (`model.route_topk`) so expert selection is identical.
-
-Correctness gate (tight, element-wise): the normalized max error
-``max|ref - out| / max|ref|`` must be <= REL_TOL (1e-2). This is the same
-max-relative-error metric the flydsl2flydsl harnesses use, and it is a true
-worst-element bound (not a cosine/L2/pass-rate band). With the quantized
-reference the measured value is ~3e-3 (the worst element is < 1 bf16 ULP at the
-output magnitude). Element-wise close% at (1e-2) and (1e-1) is also reported.
-The check ASSERTS and exits non-zero on failure.
+The pure-torch reference in ``model.py`` and the FlyDSL kernel share the same
+top-k routing (``model.route_topk``) so expert selection is identical. The
+correctness gate is the normalized max error ``max|ref - out| / max|ref|``, which
+must stay <= ``REL_TOL``; element-wise close% at 1e-2 and 1e-1 is also reported.
+The check asserts and exits non-zero on failure.
 
 Modes:
-  --correctness     assert the kernel matches the quantized reference (tight)
-  --full-benchmark  time FlyDSL vs the quantized reference, write perf report
+  --correctness     compare the kernel against the reference
+  --full-benchmark  time the kernel vs the reference and write a perf report
 """
 import argparse
 import importlib.util
@@ -71,12 +63,10 @@ SHAPES = [
 REL_TOL = 1e-2
 SEED = 20260401
 BLOCK_M, TILE_N, TILE_K, MODE = 32, 256, 256, "atomic"
-# Correctness uses the deterministic "reduce" combine instead of "atomic".
-# The atomic stage-2 combine sums per-expert partials with order-dependent
-# fp32 atomic-adds, so its worst-element error is nondeterministic at the
-# ~1-bf16-ULP scale and can jitter across the tight 1e-2 gate run-to-run. The
-# "reduce" path computes the identical math with a deterministic reduction,
-# giving a stable, reproducible gate (same tolerance, no kernel-numerics change).
+# Correctness uses the deterministic "reduce" combine. The "atomic" stage-2
+# combine sums per-expert partials with order-dependent fp32 atomic-adds, so its
+# result is nondeterministic run-to-run; "reduce" computes the identical math
+# with a deterministic reduction (same numerics, reproducible comparison).
 CORRECTNESS_MODE = "reduce"
 
 

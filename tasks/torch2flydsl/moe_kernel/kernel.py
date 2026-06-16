@@ -1,41 +1,20 @@
 # Copyright(C) [2026] Advanced Micro Devices, Inc. All rights reserved.
-"""Self-contained INLINE FlyDSL target for fused MoE via the real a4w4 (mxfp4)
-two-stage path.
+"""FlyDSL a4w4 (MXFP4) two-stage fused MoE kernel.
 
-INLINE KERNEL STATUS (read this):
-  This file is a SELF-CONTAINED inline FlyDSL kernel (like the flydsl2flydsl
-  tasks and the torch2flydsl hgemm kernel). It imports ``flydsl`` directly and
-  defines the a4w4 stage1 (gate/up GEMM + fused silu-gated activation) and
-  stage2 (down GEMM + weighted top-k combine) DEVICE KERNELS inline. There are
-  NO imports of AITER device kernels.
+Defines the stage-1 (gate/up GEMM with fused silu-gated activation) and stage-2
+(down GEMM with weighted top-k combine) device kernels in FlyDSL. The device
+builders ``compile_mixed_moe_gemm1`` / ``compile_mixed_moe_gemm2`` -- exposed via
+``build_moe_stage1_module`` / ``build_moe_stage2_module`` and driven by the
+``_moe_stage1`` / ``_moe_stage2`` host runners -- are adapted from AITER's
+mixed_moe_gemm_2stage path together with its preshuffle pipeline, CShuffle MFMA
+epilogue, layout helpers and GateMode enum.
 
-  The device-kernel source is copied/adapted verbatim from AITER
-  (commit 075c95f28383e6ca05fd829a21edb67083acb01c):
-    - aiter/ops/flydsl/kernels/layout_utils.py            (layout idx<->crd)
-    - aiter/ops/flydsl/kernels/mfma_preshuffle_pipeline.py (B/scale preshuffle,
-        DMA-to-LDS, xor16 swizzle helpers)  [crd2idx -> _pre_crd2idx]
-    - aiter/ops/flydsl/kernels/mfma_epilogues.py          (CShuffle epilogue)
-        [_if_then -> _epi_if_then to avoid clash with the stage builder helper]
-    - aiter/ops/flydsl/kernels/mixed_moe_gemm_2stage.py   (the authoritative
-        compile_mixed_moe_gemm1 / compile_mixed_moe_gemm2 device-kernel builders)
-    - aiter/ops/flydsl/moe_common.py :: GateMode           (inlined enum below)
-  The host stage1/stage2 runners and arg-packers are adapted from
-  aiter/ops/flydsl/moe_kernels.py (the fp4/fp4 -> bf16, k_batch=1 path).
-
-WHAT IS THE KERNEL vs WHAT IS HARNESS-SIDE PREP:
-  - FlyDSL device kernels (the translated GPU compute): the inline
-    ``compile_mixed_moe_gemm1`` / ``compile_mixed_moe_gemm2`` builders, exposed
-    via ``build_moe_stage1_module(...)`` / ``build_moe_stage2_module(...)`` and
-    driven by the ``_moe_stage1`` / ``_moe_stage2`` host runners.
-  - Harness-side data prep (NOT the kernel; allowed to use AITER utilities):
-    mxfp4 quantization (``get_torch_quant``), e8m0 scale build, weight/scale
-    pre-shuffle (``aiter.ops.shuffle``), and the sorted token dispatch
-    (``aiter.fused_moe.moe_sorting``). These shape host inputs into the layout
-    the device kernels consume.
-
-``flydsl_moe_a4w4`` takes the bf16 weights and a precomputed routing (so the
-reference and kernel share identical top-k selection), and returns bf16
-[T, model_dim].
+``flydsl_moe_a4w4`` is the launcher: it takes bf16 weights and a precomputed
+routing (so the reference and kernel share identical top-k selection) and returns
+a bf16 ``[T, model_dim]`` tensor. Host-side data prep -- MXFP4/e8m0 per_1x32
+quantization, weight/scale pre-shuffle and the sorted token/expert dispatch
+(``moe_sorting``) -- uses AITER utilities to shape inputs into the layout the
+device kernels consume.
 """
 from __future__ import annotations
 
@@ -6139,7 +6118,7 @@ def compile_mixed_moe_gemm2(
 # ===========================================================================
 # Host-side launchers (adapted from aiter/ops/flydsl/moe_kernels.py).
 # These pack pointer args and drive the inline compile_mixed_moe_gemm1/2
-# builders above. No AITER device kernels are imported.
+# builders above.
 # ===========================================================================
 _DLPACK_SAFE = (torch.uint8, torch.float16, torch.bfloat16, torch.float32)
 

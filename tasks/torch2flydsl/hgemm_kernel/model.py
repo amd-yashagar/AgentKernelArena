@@ -1,8 +1,8 @@
 # Copyright(C) [2026] Advanced Micro Devices, Inc. All rights reserved.
-"""PyTorch reference (KernelBench format) for half-precision GEMM.
+"""PyTorch reference for half-precision GEMM.
 
-out = a @ b.T  with fp32 accumulation, where `a` is [M, K] and `b` is [N, K].
-This matches the FlyDSL `flydsl_hgemm(a, b)` operand layout (b stored [N, K]).
+Computes ``out = a @ b.T`` with fp32 accumulation, where ``a`` is ``[M, K]`` and
+``b`` is ``[N, K]``. The result is cast back to the input dtype.
 """
 import torch
 import torch.nn as nn
@@ -18,8 +18,7 @@ class Model(nn.Module):
 
 
 def get_inputs():
-    # Default representative shape (M, N, K) = (256, 256, 5120) from
-    # aiter/configs/bf16_untuned_gemm.csv. The harness sweeps more real shapes.
+    # Representative shape (M, N, K) = (256, 256, 5120); the harness sweeps more.
     m, n, k = 256, 256, 5120
     a = torch.rand(m, k, dtype=torch.bfloat16)
     b = torch.rand(n, k, dtype=torch.bfloat16)

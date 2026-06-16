@@ -17,14 +17,9 @@ source_origin:
   commit: 075c95f28383e6ca05fd829a21edb67083acb01c
   path: aiter/ops/flydsl/kernels/splitk_hgemm.py
   note: >-
-    PyTorch reference in model.py; FlyDSL target in kernel.py is a SELF-CONTAINED
-    INLINE copy of the real AITER split-K HGEMM device kernel
-    (aiter/ops/flydsl/kernels/splitk_hgemm.py :: compile_hgemm_kernel, built via
-    hgemm_dispatch.compile_flydsl_hgemm_kernel) plus the on-device tensor shim
-    (aiter/ops/flydsl/kernels/tensor_shim.py). It imports flydsl directly and
-    does NOT import any AITER wrapper. Real bf16 GEMM shapes from
-    aiter/configs/bf16_untuned_gemm.csv and
-    aiter/configs/model_configs/dsv3_bf16_untuned_gemm.csv.
+    PyTorch reference in model.py. The FlyDSL kernel in kernel.py is a split-K
+    HGEMM (out = a @ b.T, fp32 accumulate, bf16/f16 in and out) with MFMA
+    wave-level matmul and double-buffered LDS.
 prompt:
   source_code: null
   instructions: |

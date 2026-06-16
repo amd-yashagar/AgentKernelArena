@@ -1,21 +1,13 @@
 # Copyright(C) [2026] Advanced Micro Devices, Inc. All rights reserved.
-"""Self-contained FlyDSL target for half-precision GEMM (out = a @ b.T).
+"""FlyDSL split-K half-precision GEMM (out = a @ b.T).
 
-This is an INLINE translation of the PyTorch `Model.forward` in ``model.py``:
-``out = a @ b.T`` with fp32 accumulation, bf16/f16 in and out, where ``a`` is
-``[M, K]`` and ``b`` is ``[N, K]``.
-
-The device kernel is copied/adapted from the real AITER FlyDSL split-K HGEMM
-(``aiter/ops/flydsl/kernels/splitk_hgemm.py`` :: ``compile_hgemm_kernel``,
-built via ``hgemm_dispatch.compile_flydsl_hgemm_kernel``) and the on-device
-tensor shim (``aiter/ops/flydsl/kernels/tensor_shim.py`` :: ``GTensor`` /
-``STensor`` / ``get_dtype_in_kernel``). It imports ``flydsl`` directly and does
-NOT import any AITER wrapper. The host entry points are:
+Computes ``out = a @ b.T`` with fp32 accumulation and bf16/f16 in and out, where
+``a`` is ``[M, K]`` and ``b`` is ``[N, K]``. Host entry points:
 
   * ``build_hgemm_module(dtype, n, k, ...)`` -> compiled FlyDSL launcher
   * ``flydsl_hgemm(a, b, ...)``             -> runs the kernel, returns [M, N]
 
-MFMA-based wave-level matmul, double-buffered LDS with XOR swizzle and
+Uses MFMA-based wave-level matmul, double-buffered LDS with XOR swizzle and
 DMA-to-LDS async copy on CDNA3/CDNA4 (gfx950). fp32 accumulation, output
 truncated to the input dtype.
 """
@@ -51,7 +43,7 @@ from flydsl.utils.smem_allocator import SMEM_CAPACITY_MAP, SmemAllocator, SmemPt
 
 
 # ===========================================================================
-# On-device tensor shim (inlined from aiter/ops/flydsl/kernels/tensor_shim.py)
+# On-device tensor shim
 # ===========================================================================
 def get_dtype_in_kernel(dtype: str):
     if dtype == "f32":
@@ -295,7 +287,7 @@ class STensor(TensorBase):
 
 
 # ===========================================================================
-# Device kernel (inlined from aiter/ops/flydsl/kernels/splitk_hgemm.py)
+# Device kernel
 # ===========================================================================
 SPLIT_K_SEMAPHORE_MAX_LEN = 256
 
@@ -1150,7 +1142,7 @@ def compile_hgemm_kernel(
 
 
 # ===========================================================================
-# Host launcher (self-contained; adapted from the AITER flydsl_hgemm wrapper)
+# Host launcher
 # ===========================================================================
 def _ptr_view_safe(t: torch.Tensor):
     type_name = type(t).__name__
