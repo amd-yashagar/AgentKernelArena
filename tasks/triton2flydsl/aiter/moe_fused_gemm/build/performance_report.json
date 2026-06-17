@@ -1,0 +1,62 @@
+[
+  {
+    "test_case_id": "perf1",
+    "execution_time_ms": 0.09904100000858307,
+    "params": {
+      "M": 64,
+      "K": 1024,
+      "N": 512,
+      "E": 8,
+      "top_k": 2
+    },
+    "tflops": 1.355173392719868
+  },
+  {
+    "test_case_id": "perf2",
+    "execution_time_ms": 0.10588099807500839,
+    "params": {
+      "M": 128,
+      "K": 2048,
+      "N": 1024,
+      "E": 8,
+      "top_k": 2
+    },
+    "tflops": 10.141024768574036
+  },
+  {
+    "test_case_id": "perf3",
+    "execution_time_ms": 0.12136100232601166,
+    "params": {
+      "M": 256,
+      "K": 4096,
+      "N": 512,
+      "E": 16,
+      "top_k": 1
+    },
+    "tflops": 8.84750293274285
+  },
+  {
+    "test_case_id": "perf4",
+    "execution_time_ms": 0.10068099945783615,
+    "params": {
+      "M": 512,
+      "K": 1024,
+      "N": 768,
+      "E": 16,
+      "top_k": 2
+    },
+    "tflops": 15.997186605944478
+  },
+  {
+    "test_case_id": "perf5",
+    "execution_time_ms": 0.13236099481582642,
+    "params": {
+      "M": 1024,
+      "K": 2048,
+      "N": 256,
+      "E": 32,
+      "top_k": 4
+    },
+    "tflops": 32.44888950839504
+  }
+]

@@ -1,0 +1,107 @@
+[
+  {
+    "test_case_id": "perf1",
+    "execution_time_ms": 0.03387701015919447,
+    "params": {
+      "num_seqs": 2,
+      "seq_len_q": 4,
+      "seq_len_k": 64,
+      "num_query_heads": 8,
+      "num_kv_heads": 8,
+      "head_size": 64,
+      "block_size": 16,
+      "sliding_window": 0,
+      "softcap": 0.0
+    }
+  },
+  {
+    "test_case_id": "perf2",
+    "execution_time_ms": 0.03431219996884465,
+    "params": {
+      "num_seqs": 1,
+      "seq_len_q": 1,
+      "seq_len_k": 128,
+      "num_query_heads": 16,
+      "num_kv_heads": 4,
+      "head_size": 64,
+      "block_size": 16,
+      "sliding_window": 0,
+      "softcap": 0.0
+    }
+  },
+  {
+    "test_case_id": "perf3",
+    "execution_time_ms": 0.03511580988764763,
+    "params": {
+      "num_seqs": 4,
+      "seq_len_q": 1,
+      "seq_len_k": 256,
+      "num_query_heads": 32,
+      "num_kv_heads": 8,
+      "head_size": 128,
+      "block_size": 16,
+      "sliding_window": 0,
+      "softcap": 0.0
+    }
+  },
+  {
+    "test_case_id": "perf4",
+    "execution_time_ms": 0.03477781992405653,
+    "params": {
+      "num_seqs": 2,
+      "seq_len_q": 8,
+      "seq_len_k": 128,
+      "num_query_heads": 16,
+      "num_kv_heads": 16,
+      "head_size": 64,
+      "block_size": 32,
+      "sliding_window": 32,
+      "softcap": 0.0
+    }
+  },
+  {
+    "test_case_id": "perf5",
+    "execution_time_ms": 0.03514139994978905,
+    "params": {
+      "num_seqs": 1,
+      "seq_len_q": 16,
+      "seq_len_k": 512,
+      "num_query_heads": 8,
+      "num_kv_heads": 8,
+      "head_size": 128,
+      "block_size": 32,
+      "sliding_window": 64,
+      "softcap": 1.0
+    }
+  },
+  {
+    "test_case_id": "perf6",
+    "execution_time_ms": 0.05877314001321793,
+    "params": {
+      "num_seqs": 1,
+      "seq_len_q": 8,
+      "seq_len_k": 1024,
+      "num_query_heads": 8,
+      "num_kv_heads": 8,
+      "head_size": 128,
+      "block_size": 32,
+      "sliding_window": 0,
+      "softcap": 0.0
+    }
+  },
+  {
+    "test_case_id": "perf7",
+    "execution_time_ms": 0.058411160036921504,
+    "params": {
+      "num_seqs": 1,
+      "seq_len_q": 16,
+      "seq_len_k": 768,
+      "num_query_heads": 8,
+      "num_kv_heads": 8,
+      "head_size": 64,
+      "block_size": 32,
+      "sliding_window": 0,
+      "softcap": 1.0
+    }
+  }
+]

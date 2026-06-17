@@ -1,0 +1,121 @@
+{
+  "status": "ok",
+  "error": null,
+  "num_shapes": 6,
+  "details": [
+    {
+      "shape_id": 1,
+      "shape": [
+        2,
+        128,
+        8,
+        8,
+        64,
+        false
+      ],
+      "out_shape": [
+        2,
+        128,
+        8,
+        64
+      ],
+      "finite": true,
+      "passed": true
+    },
+    {
+      "shape_id": 2,
+      "shape": [
+        2,
+        128,
+        8,
+        8,
+        64,
+        true
+      ],
+      "out_shape": [
+        2,
+        128,
+        8,
+        64
+      ],
+      "finite": true,
+      "passed": true
+    },
+    {
+      "shape_id": 3,
+      "shape": [
+        1,
+        256,
+        16,
+        16,
+        128,
+        true
+      ],
+      "out_shape": [
+        1,
+        256,
+        16,
+        128
+      ],
+      "finite": true,
+      "passed": true
+    },
+    {
+      "shape_id": 4,
+      "shape": [
+        4,
+        64,
+        16,
+        4,
+        64,
+        true
+      ],
+      "out_shape": [
+        4,
+        64,
+        16,
+        64
+      ],
+      "finite": true,
+      "passed": true
+    },
+    {
+      "shape_id": 5,
+      "shape": [
+        1,
+        512,
+        8,
+        2,
+        128,
+        false
+      ],
+      "out_shape": [
+        1,
+        512,
+        8,
+        128
+      ],
+      "finite": true,
+      "passed": true
+    },
+    {
+      "shape_id": 6,
+      "shape": [
+        2,
+        384,
+        12,
+        12,
+        64,
+        true
+      ],
+      "out_shape": [
+        2,
+        384,
+        12,
+        64
+      ],
+      "finite": true,
+      "passed": true
+    }
+  ]
+}

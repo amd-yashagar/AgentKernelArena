@@ -1,0 +1,72 @@
+[
+  {
+    "test_case_id": "perf1",
+    "execution_time_ms": 0.027117859963327648,
+    "params": {
+      "num_seqs": 1,
+      "tokens_per_seq": 1,
+      "num_query_heads": 16,
+      "kv_lora_rank": 128,
+      "rope_rank": 64,
+      "block_size": 64,
+      "num_blocks": 8,
+      "topk": 64
+    }
+  },
+  {
+    "test_case_id": "perf2",
+    "execution_time_ms": 0.027567419903352857,
+    "params": {
+      "num_seqs": 2,
+      "tokens_per_seq": 1,
+      "num_query_heads": 16,
+      "kv_lora_rank": 128,
+      "rope_rank": 64,
+      "block_size": 64,
+      "num_blocks": 8,
+      "topk": 64
+    }
+  },
+  {
+    "test_case_id": "perf3",
+    "execution_time_ms": 0.027013430027291178,
+    "params": {
+      "num_seqs": 1,
+      "tokens_per_seq": 1,
+      "num_query_heads": 32,
+      "kv_lora_rank": 128,
+      "rope_rank": 64,
+      "block_size": 64,
+      "num_blocks": 16,
+      "topk": 128
+    }
+  },
+  {
+    "test_case_id": "perf4",
+    "execution_time_ms": 0.028083070032298565,
+    "params": {
+      "num_seqs": 1,
+      "tokens_per_seq": 4,
+      "num_query_heads": 16,
+      "kv_lora_rank": 256,
+      "rope_rank": 64,
+      "block_size": 64,
+      "num_blocks": 8,
+      "topk": 96
+    }
+  },
+  {
+    "test_case_id": "perf5",
+    "execution_time_ms": 0.026775420112535357,
+    "params": {
+      "num_seqs": 2,
+      "tokens_per_seq": 2,
+      "num_query_heads": 16,
+      "kv_lora_rank": 128,
+      "rope_rank": 64,
+      "block_size": 32,
+      "num_blocks": 16,
+      "topk": 64
+    }
+  }
+]

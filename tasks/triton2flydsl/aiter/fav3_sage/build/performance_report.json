@@ -1,0 +1,93 @@
+[
+  {
+    "test_case_id": "perf1",
+    "execution_time_ms": 0.12824103936553002,
+    "params": {
+      "batch": 1,
+      "seqlen": 64,
+      "num_q_heads": 4,
+      "num_kv_heads": 4,
+      "head_dim": 64,
+      "causal": true,
+      "window": 0
+    }
+  },
+  {
+    "test_case_id": "perf2",
+    "execution_time_ms": 0.13132747903466224,
+    "params": {
+      "batch": 1,
+      "seqlen": 128,
+      "num_q_heads": 8,
+      "num_kv_heads": 8,
+      "head_dim": 64,
+      "causal": true,
+      "window": 0
+    }
+  },
+  {
+    "test_case_id": "perf3",
+    "execution_time_ms": 0.1308194603025913,
+    "params": {
+      "batch": 2,
+      "seqlen": 128,
+      "num_q_heads": 8,
+      "num_kv_heads": 2,
+      "head_dim": 64,
+      "causal": true,
+      "window": 0
+    }
+  },
+  {
+    "test_case_id": "perf4",
+    "execution_time_ms": 0.13167468026280404,
+    "params": {
+      "batch": 1,
+      "seqlen": 128,
+      "num_q_heads": 8,
+      "num_kv_heads": 8,
+      "head_dim": 128,
+      "causal": true,
+      "window": 0
+    }
+  },
+  {
+    "test_case_id": "perf5",
+    "execution_time_ms": 0.13226667985320092,
+    "params": {
+      "batch": 1,
+      "seqlen": 128,
+      "num_q_heads": 8,
+      "num_kv_heads": 8,
+      "head_dim": 64,
+      "causal": false,
+      "window": 0
+    }
+  },
+  {
+    "test_case_id": "perf6",
+    "execution_time_ms": 0.13069705978035928,
+    "params": {
+      "batch": 1,
+      "seqlen": 256,
+      "num_q_heads": 8,
+      "num_kv_heads": 8,
+      "head_dim": 64,
+      "causal": true,
+      "window": 0
+    }
+  },
+  {
+    "test_case_id": "perf7",
+    "execution_time_ms": 0.13076505944132805,
+    "params": {
+      "batch": 2,
+      "seqlen": 128,
+      "num_q_heads": 8,
+      "num_kv_heads": 8,
+      "head_dim": 64,
+      "causal": true,
+      "window": 32
+    }
+  }
+]

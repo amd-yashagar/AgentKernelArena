@@ -1,0 +1,102 @@
+{
+  "status": "ok",
+  "error": null,
+  "num_shapes": 5,
+  "details": [
+    {
+      "shape_id": 1,
+      "shape": [
+        1,
+        128,
+        4,
+        4,
+        128,
+        true
+      ],
+      "out_shape": [
+        1,
+        128,
+        4,
+        128
+      ],
+      "finite": true,
+      "passed": true
+    },
+    {
+      "shape_id": 2,
+      "shape": [
+        1,
+        256,
+        8,
+        8,
+        128,
+        true
+      ],
+      "out_shape": [
+        1,
+        256,
+        8,
+        128
+      ],
+      "finite": true,
+      "passed": true
+    },
+    {
+      "shape_id": 3,
+      "shape": [
+        2,
+        128,
+        8,
+        2,
+        128,
+        true
+      ],
+      "out_shape": [
+        2,
+        128,
+        8,
+        128
+      ],
+      "finite": true,
+      "passed": true
+    },
+    {
+      "shape_id": 4,
+      "shape": [
+        1,
+        256,
+        8,
+        8,
+        128,
+        false
+      ],
+      "out_shape": [
+        1,
+        256,
+        8,
+        128
+      ],
+      "finite": true,
+      "passed": true
+    },
+    {
+      "shape_id": 5,
+      "shape": [
+        1,
+        384,
+        4,
+        4,
+        128,
+        true
+      ],
+      "out_shape": [
+        1,
+        384,
+        4,
+        128
+      ],
+      "finite": true,
+      "passed": true
+    }
+  ]
+}

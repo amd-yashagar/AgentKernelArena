@@ -1,0 +1,57 @@
+[
+  {
+    "test_case_id": "perf1",
+    "execution_time_ms": 0.025800000876188278,
+    "params": {
+      "seq_len": 64,
+      "seq_len_kv": 512,
+      "num_heads": 32,
+      "head_size": 128,
+      "window": "full"
+    }
+  },
+  {
+    "test_case_id": "perf2",
+    "execution_time_ms": 0.0272000003606081,
+    "params": {
+      "seq_len": 128,
+      "seq_len_kv": 1000,
+      "num_heads": 64,
+      "head_size": 128,
+      "window": "full"
+    }
+  },
+  {
+    "test_case_id": "perf3",
+    "execution_time_ms": 0.026920000091195107,
+    "params": {
+      "seq_len": 256,
+      "seq_len_kv": 2048,
+      "num_heads": 32,
+      "head_size": 64,
+      "window": "causal"
+    }
+  },
+  {
+    "test_case_id": "perf4",
+    "execution_time_ms": 0.026280999183654785,
+    "params": {
+      "seq_len": 96,
+      "seq_len_kv": 777,
+      "num_heads": 16,
+      "head_size": 128,
+      "window": "band"
+    }
+  },
+  {
+    "test_case_id": "perf5",
+    "execution_time_ms": 0.07372000068426132,
+    "params": {
+      "seq_len": 2048,
+      "seq_len_kv": 1024,
+      "num_heads": 64,
+      "head_size": 128,
+      "window": "full"
+    }
+  }
+]

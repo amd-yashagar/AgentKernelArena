@@ -1,0 +1,62 @@
+[
+  {
+    "test_case_id": "perf1",
+    "execution_time_ms": 0.2081809201836586,
+    "params": {
+      "batch": 1,
+      "seqlen": 128,
+      "num_q_heads": 4,
+      "num_kv_heads": 4,
+      "head_dim": 128,
+      "causal": true
+    }
+  },
+  {
+    "test_case_id": "perf2",
+    "execution_time_ms": 0.20942573934793474,
+    "params": {
+      "batch": 1,
+      "seqlen": 256,
+      "num_q_heads": 8,
+      "num_kv_heads": 8,
+      "head_dim": 128,
+      "causal": true
+    }
+  },
+  {
+    "test_case_id": "perf3",
+    "execution_time_ms": 0.21002654045820235,
+    "params": {
+      "batch": 2,
+      "seqlen": 128,
+      "num_q_heads": 8,
+      "num_kv_heads": 2,
+      "head_dim": 128,
+      "causal": true
+    }
+  },
+  {
+    "test_case_id": "perf4",
+    "execution_time_ms": 0.21048651963472367,
+    "params": {
+      "batch": 1,
+      "seqlen": 256,
+      "num_q_heads": 8,
+      "num_kv_heads": 8,
+      "head_dim": 128,
+      "causal": false
+    }
+  },
+  {
+    "test_case_id": "perf5",
+    "execution_time_ms": 0.21094489991664886,
+    "params": {
+      "batch": 1,
+      "seqlen": 384,
+      "num_q_heads": 4,
+      "num_kv_heads": 4,
+      "head_dim": 128,
+      "causal": true
+    }
+  }
+]

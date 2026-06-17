@@ -1,0 +1,52 @@
+[
+  {
+    "test_case_id": "perf1",
+    "execution_time_ms": 0.022001000121235847,
+    "params": {
+      "M": 256,
+      "K": 2048,
+      "N": 16,
+      "shared": false
+    }
+  },
+  {
+    "test_case_id": "perf2",
+    "execution_time_ms": 0.031279999762773514,
+    "params": {
+      "M": 1024,
+      "K": 4096,
+      "N": 32,
+      "shared": false
+    }
+  },
+  {
+    "test_case_id": "perf3",
+    "execution_time_ms": 0.0464400015771389,
+    "params": {
+      "M": 2048,
+      "K": 5120,
+      "N": 128,
+      "shared": false
+    }
+  },
+  {
+    "test_case_id": "perf4",
+    "execution_time_ms": 0.0430000014603138,
+    "params": {
+      "M": 512,
+      "K": 4096,
+      "N": 64,
+      "shared": true
+    }
+  },
+  {
+    "test_case_id": "perf5",
+    "execution_time_ms": 0.024960000067949295,
+    "params": {
+      "M": 4096,
+      "K": 1024,
+      "N": 128,
+      "shared": false
+    }
+  }
+]

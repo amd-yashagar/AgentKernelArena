@@ -1,0 +1,147 @@
+{
+  "status": "ok",
+  "error": null,
+  "num_shapes": 7,
+  "details": [
+    {
+      "shape_id": 1,
+      "shape": [
+        1,
+        64,
+        4,
+        4,
+        64,
+        true,
+        0
+      ],
+      "out_shape": [
+        1,
+        64,
+        4,
+        64
+      ],
+      "finite": true,
+      "passed": true
+    },
+    {
+      "shape_id": 2,
+      "shape": [
+        1,
+        128,
+        8,
+        8,
+        64,
+        true,
+        0
+      ],
+      "out_shape": [
+        1,
+        128,
+        8,
+        64
+      ],
+      "finite": true,
+      "passed": true
+    },
+    {
+      "shape_id": 3,
+      "shape": [
+        2,
+        128,
+        8,
+        2,
+        64,
+        true,
+        0
+      ],
+      "out_shape": [
+        2,
+        128,
+        8,
+        64
+      ],
+      "finite": true,
+      "passed": true
+    },
+    {
+      "shape_id": 4,
+      "shape": [
+        1,
+        128,
+        8,
+        8,
+        128,
+        true,
+        0
+      ],
+      "out_shape": [
+        1,
+        128,
+        8,
+        128
+      ],
+      "finite": true,
+      "passed": true
+    },
+    {
+      "shape_id": 5,
+      "shape": [
+        1,
+        128,
+        8,
+        8,
+        64,
+        false,
+        0
+      ],
+      "out_shape": [
+        1,
+        128,
+        8,
+        64
+      ],
+      "finite": true,
+      "passed": true
+    },
+    {
+      "shape_id": 6,
+      "shape": [
+        1,
+        256,
+        8,
+        8,
+        64,
+        true,
+        0
+      ],
+      "out_shape": [
+        1,
+        256,
+        8,
+        64
+      ],
+      "finite": true,
+      "passed": true
+    },
+    {
+      "shape_id": 7,
+      "shape": [
+        2,
+        128,
+        8,
+        8,
+        64,
+        true,
+        32
+      ],
+      "out_shape": [
+        2,
+        128,
+        8,
+        64
+      ],
+      "finite": true,
+      "passed": true
+    }
+  ]
+}

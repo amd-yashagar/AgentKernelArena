@@ -1,0 +1,74 @@
+[
+  {
+    "test_case_id": "perf1",
+    "execution_time_ms": 0.043603969998657705,
+    "params": {
+      "batch": 2,
+      "seqlen": 128,
+      "num_query_heads": 8,
+      "num_kv_heads": 8,
+      "head_size": 64,
+      "causal": false
+    }
+  },
+  {
+    "test_case_id": "perf2",
+    "execution_time_ms": 0.044687150083482265,
+    "params": {
+      "batch": 2,
+      "seqlen": 128,
+      "num_query_heads": 8,
+      "num_kv_heads": 8,
+      "head_size": 64,
+      "causal": true
+    }
+  },
+  {
+    "test_case_id": "perf3",
+    "execution_time_ms": 0.045988780073821546,
+    "params": {
+      "batch": 1,
+      "seqlen": 256,
+      "num_query_heads": 16,
+      "num_kv_heads": 16,
+      "head_size": 128,
+      "causal": true
+    }
+  },
+  {
+    "test_case_id": "perf4",
+    "execution_time_ms": 0.046145150139927864,
+    "params": {
+      "batch": 4,
+      "seqlen": 64,
+      "num_query_heads": 16,
+      "num_kv_heads": 4,
+      "head_size": 64,
+      "causal": true
+    }
+  },
+  {
+    "test_case_id": "perf5",
+    "execution_time_ms": 0.0464715601503849,
+    "params": {
+      "batch": 1,
+      "seqlen": 512,
+      "num_query_heads": 8,
+      "num_kv_heads": 2,
+      "head_size": 128,
+      "causal": false
+    }
+  },
+  {
+    "test_case_id": "perf6",
+    "execution_time_ms": 0.046906759925186635,
+    "params": {
+      "batch": 2,
+      "seqlen": 384,
+      "num_query_heads": 12,
+      "num_kv_heads": 12,
+      "head_size": 64,
+      "causal": true
+    }
+  }
+]
