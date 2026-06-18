@@ -1,0 +1,98 @@
+[
+  {
+    "test_case_id": "perf1",
+    "execution_time_ms": 0.07324269972741604,
+    "params": {
+      "B": 1,
+      "T": 1024,
+      "Hg": 8,
+      "H": 16,
+      "K": 128,
+      "V": 128
+    }
+  },
+  {
+    "test_case_id": "perf2",
+    "execution_time_ms": 0.06916627988219261,
+    "params": {
+      "B": 2,
+      "T": 512,
+      "Hg": 8,
+      "H": 16,
+      "K": 128,
+      "V": 128
+    }
+  },
+  {
+    "test_case_id": "perf3",
+    "execution_time_ms": 0.07522162050008774,
+    "params": {
+      "B": 1,
+      "T": 2048,
+      "Hg": 8,
+      "H": 16,
+      "K": 128,
+      "V": 128
+    }
+  },
+  {
+    "test_case_id": "perf4",
+    "execution_time_ms": 0.10714136019349098,
+    "params": {
+      "B": 1,
+      "T": 1024,
+      "Hg": 16,
+      "H": 32,
+      "K": 128,
+      "V": 128
+    }
+  },
+  {
+    "test_case_id": "perf5",
+    "execution_time_ms": 0.08229371979832649,
+    "params": {
+      "B": 4,
+      "T": 256,
+      "Hg": 8,
+      "H": 16,
+      "K": 128,
+      "V": 128
+    }
+  },
+  {
+    "test_case_id": "perf6",
+    "execution_time_ms": 0.07009700015187263,
+    "params": {
+      "B": 1,
+      "T": 1024,
+      "Hg": 16,
+      "H": 16,
+      "K": 128,
+      "V": 128
+    }
+  },
+  {
+    "test_case_id": "perf7",
+    "execution_time_ms": 0.07310154020786286,
+    "params": {
+      "B": 1,
+      "T": 4096,
+      "Hg": 8,
+      "H": 16,
+      "K": 128,
+      "V": 128
+    }
+  },
+  {
+    "test_case_id": "perf8",
+    "execution_time_ms": 0.06795224025845528,
+    "params": {
+      "B": 1,
+      "T": 1024,
+      "Hg": 8,
+      "H": 16,
+      "K": 128,
+      "V": 64
+    }
+  }
+]

@@ -1,0 +1,79 @@
+{
+  "status": "ok",
+  "error": null,
+  "num_shapes": 8,
+  "details": [
+    {
+      "shape_id": 1,
+      "shape": [
+        2048,
+        128
+      ],
+      "max_diff": 0.0009765625,
+      "passed": true
+    },
+    {
+      "shape_id": 2,
+      "shape": [
+        16384,
+        128
+      ],
+      "max_diff": 0.0009765625,
+      "passed": true
+    },
+    {
+      "shape_id": 3,
+      "shape": [
+        131072,
+        128
+      ],
+      "max_diff": 0.0009765625,
+      "passed": true
+    },
+    {
+      "shape_id": 4,
+      "shape": [
+        245760,
+        128
+      ],
+      "max_diff": 0.001953125,
+      "passed": true
+    },
+    {
+      "shape_id": 5,
+      "shape": [
+        4096,
+        64
+      ],
+      "max_diff": 0.00048828125,
+      "passed": true
+    },
+    {
+      "shape_id": 6,
+      "shape": [
+        4096,
+        256
+      ],
+      "max_diff": 0.00048828125,
+      "passed": true
+    },
+    {
+      "shape_id": 7,
+      "shape": [
+        1024,
+        512
+      ],
+      "max_diff": 0.000244140625,
+      "passed": true
+    },
+    {
+      "shape_id": 8,
+      "shape": [
+        1024,
+        1024
+      ],
+      "max_diff": 0.00048828125,
+      "passed": true
+    }
+  ]
+}
