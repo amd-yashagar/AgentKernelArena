@@ -132,7 +132,8 @@ def run_correctness(verbose=True):
     init = mmod.get_init_inputs()
     smoke_model = mmod.Model(*init).to("cuda").eval()
     with torch.no_grad():
-        smoke_args = mmod.get_inputs()
+        # get_inputs() returns CPU tensors (KernelBench convention); relocate.
+        smoke_args = [a.to("cuda") for a in mmod.get_inputs()]
         _sq, _skv = smoke_model(*smoke_args)
     assert _sq.shape[0] == smoke_args[0].shape[0], "smoke Model forward shape mismatch"
     if verbose:

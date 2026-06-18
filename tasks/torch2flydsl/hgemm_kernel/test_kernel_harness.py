@@ -118,7 +118,8 @@ def run_correctness(verbose=True):
     status = "ALL PASS" if not failures else f"FAILED ({len(failures)}/{len(SHAPES)})"
     print(f"Status: {status}")
     print(f"correctness: {'pass' if not failures else 'fail'}")
-    return {"correct": not failures}
+    assert not failures, f"correctness FAILED for: {failures}"
+    return True
 
 
 def run_benchmark(warmup=10, iters=50, verbose=True):
@@ -209,7 +210,11 @@ if __name__ == "__main__":
     print("=" * 62)
 
     if args.correctness:
-        result = run_correctness()
-        sys.exit(0 if result.get("correct", False) else 1)
+        try:
+            run_correctness()
+        except AssertionError as exc:
+            print(f"ASSERTION: {exc}")
+            sys.exit(1)
+        sys.exit(0)
     else:
         run_benchmark(warmup=args.warmup, iters=args.iterations)

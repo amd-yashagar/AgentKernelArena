@@ -132,7 +132,8 @@ def run_correctness(verbose=True):
     print(f"Tight gate: rel_max = max|ref-out| / max|ref| <= {REL_GATE:.0e}")
     print(f"Worst-element relative error across shapes: {worst_rel:.2e}")
     print(f"correctness: {'pass' if not failures else 'fail'}")
-    return {"correct": not failures, "worst_rel": worst_rel}
+    assert not failures, f"correctness FAILED for: {failures}"
+    return True
 
 
 def run_benchmark(warmup=10, iters=50, verbose=True):
@@ -228,7 +229,11 @@ if __name__ == "__main__":
     print("=" * 56)
 
     if args.correctness:
-        result = run_correctness()
-        sys.exit(0 if result.get("correct", False) else 1)
+        try:
+            run_correctness()
+        except AssertionError as exc:
+            print(f"ASSERTION: {exc}")
+            sys.exit(1)
+        sys.exit(0)
     else:
         run_benchmark(warmup=args.warmup, iters=args.iterations)

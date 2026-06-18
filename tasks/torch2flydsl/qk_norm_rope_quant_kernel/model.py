@@ -83,7 +83,7 @@ class Model(nn.Module):
         return q_roped.to(torch.bfloat16), kv_roped.to(torch.bfloat16)
 
 
-def _build_cos_sin(max_pos, RD, device="cuda"):
+def _build_cos_sin(max_pos, RD, device="cpu"):
     """RoPE cos/sin tables, shape [max_pos, RD/2]."""
     inv_freq = 1.0 / (10000 ** (torch.arange(0, RD, 2, device=device).float() / RD))
     pos_range = torch.arange(max_pos, device=device).float()
@@ -95,22 +95,22 @@ def _build_cos_sin(max_pos, RD, device="cuda"):
 
 def get_inputs():
     # Representative decode shape: T=16 tokens, H=16 Q heads, D=512 head_dim,
-    # RD=64 rope tail.
+    # RD=64 rope tail. CPU tensors (KernelBench convention; the consumer/harness
+    # relocates to the GPU).
     H, D, RD = 16, 512, 64
     T = 16
-    device = "cuda" if torch.cuda.is_available() else "cpu"
     torch.manual_seed(0)
 
     max_pos = max(T, 64)
-    cos, sin = _build_cos_sin(max_pos, RD, device=device)
+    cos, sin = _build_cos_sin(max_pos, RD)
 
-    q = torch.randn(T, H * D, dtype=torch.bfloat16, device=device) * 0.1
+    q = torch.randn(T, H * D, dtype=torch.bfloat16) * 0.1
     # kv is a strided slice of a wider [T, Q_LORA + D] tensor.
     Q_LORA = 1536
-    qkv_a = torch.randn(T, Q_LORA + D, dtype=torch.bfloat16, device=device) * 0.1
+    qkv_a = torch.randn(T, Q_LORA + D, dtype=torch.bfloat16) * 0.1
     _, kv = torch.split(qkv_a, [Q_LORA, D], dim=-1)
-    kv_weight = torch.randn(D, dtype=torch.bfloat16, device=device).abs() + 0.5
-    positions = torch.randint(0, max_pos - 1, (T,), dtype=torch.int64, device=device)
+    kv_weight = torch.randn(D, dtype=torch.bfloat16).abs() + 0.5
+    positions = torch.randint(0, max_pos - 1, (T,), dtype=torch.int64)
     return [q, kv, kv_weight, cos, sin, positions]
 
 

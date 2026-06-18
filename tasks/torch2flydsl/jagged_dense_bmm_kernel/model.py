@@ -41,7 +41,7 @@ class Model(nn.Module):
         return out
 
 
-def _make_seq_offsets(m_per_group, device="cuda"):
+def _make_seq_offsets(m_per_group, device="cpu"):
     so = torch.zeros(len(m_per_group) + 1, dtype=torch.int32, device=device)
     for i, m in enumerate(m_per_group):
         so[i + 1] = so[i] + int(m)
@@ -50,18 +50,18 @@ def _make_seq_offsets(m_per_group, device="cuda"):
 
 def get_inputs():
     # Representative jagged shape: B=4 groups with varied per-group row counts
-    # M_b summing to total_M, fixed N=K=128.
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    # M_b summing to total_M, fixed N=K=128. CPU tensors (KernelBench
+    # convention; the consumer/harness relocates to the GPU).
     torch.manual_seed(0)
     N, K = 128, 128
     m_per_group = [100, 128, 64, 200]  # varied, unaligned M_b
     B = len(m_per_group)
     total_M = sum(m_per_group)
 
-    seq_offsets = _make_seq_offsets(m_per_group, device=device)
-    jagged = torch.randn(total_M, K, dtype=torch.bfloat16, device=device)
-    dense = torch.randn(B, N, K, dtype=torch.bfloat16, device=device)
-    bias = torch.randn(B, N, dtype=torch.bfloat16, device=device)
+    seq_offsets = _make_seq_offsets(m_per_group)
+    jagged = torch.randn(total_M, K, dtype=torch.bfloat16)
+    dense = torch.randn(B, N, K, dtype=torch.bfloat16)
+    bias = torch.randn(B, N, dtype=torch.bfloat16)
     return [jagged, dense, bias, seq_offsets]
 
 
