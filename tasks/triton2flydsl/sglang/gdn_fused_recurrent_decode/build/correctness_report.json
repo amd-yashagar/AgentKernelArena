@@ -1,0 +1,147 @@
+{
+  "status": "ok",
+  "error": null,
+  "num_shapes": 10,
+  "details": [
+    {
+      "shape_id": 1,
+      "shape": [
+        1,
+        8,
+        16,
+        128,
+        128,
+        32
+      ],
+      "out_max_diff": 0.0001220703125,
+      "state_max_diff": 0.00390625,
+      "passed": true
+    },
+    {
+      "shape_id": 2,
+      "shape": [
+        2,
+        8,
+        16,
+        128,
+        128,
+        32
+      ],
+      "out_max_diff": 0.0001220703125,
+      "state_max_diff": 0.00390625,
+      "passed": true
+    },
+    {
+      "shape_id": 3,
+      "shape": [
+        4,
+        8,
+        16,
+        128,
+        128,
+        32
+      ],
+      "out_max_diff": 0.000244140625,
+      "state_max_diff": 0.00390625,
+      "passed": true
+    },
+    {
+      "shape_id": 4,
+      "shape": [
+        8,
+        8,
+        16,
+        128,
+        128,
+        64
+      ],
+      "out_max_diff": 0.000244140625,
+      "state_max_diff": 0.00390625,
+      "passed": true
+    },
+    {
+      "shape_id": 5,
+      "shape": [
+        16,
+        8,
+        16,
+        128,
+        128,
+        64
+      ],
+      "out_max_diff": 0.000244140625,
+      "state_max_diff": 0.00390625,
+      "passed": true
+    },
+    {
+      "shape_id": 6,
+      "shape": [
+        32,
+        8,
+        16,
+        128,
+        128,
+        128
+      ],
+      "out_max_diff": 0.000244140625,
+      "state_max_diff": 0.00390625,
+      "passed": true
+    },
+    {
+      "shape_id": 7,
+      "shape": [
+        64,
+        8,
+        16,
+        128,
+        128,
+        128
+      ],
+      "out_max_diff": 0.000244140625,
+      "state_max_diff": 0.00390625,
+      "passed": true
+    },
+    {
+      "shape_id": 8,
+      "shape": [
+        128,
+        8,
+        16,
+        128,
+        128,
+        256
+      ],
+      "out_max_diff": 0.000244140625,
+      "state_max_diff": 0.00390625,
+      "passed": true
+    },
+    {
+      "shape_id": 9,
+      "shape": [
+        1,
+        16,
+        32,
+        128,
+        128,
+        32
+      ],
+      "out_max_diff": 0.000244140625,
+      "state_max_diff": 0.00390625,
+      "passed": true
+    },
+    {
+      "shape_id": 10,
+      "shape": [
+        32,
+        16,
+        32,
+        128,
+        128,
+        128
+      ],
+      "out_max_diff": 0.000244140625,
+      "state_max_diff": 0.00390625,
+      "passed": true
+    }
+  ]
+}

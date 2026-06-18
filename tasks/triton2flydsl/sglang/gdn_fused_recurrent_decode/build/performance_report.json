@@ -1,0 +1,122 @@
+[
+  {
+    "test_case_id": "perf1",
+    "execution_time_ms": 0.08021932028234005,
+    "params": {
+      "B": 1,
+      "H": 8,
+      "HV": 16,
+      "K": 128,
+      "V": 128,
+      "pool_size": 32
+    }
+  },
+  {
+    "test_case_id": "perf2",
+    "execution_time_ms": 0.07652690023183822,
+    "params": {
+      "B": 2,
+      "H": 8,
+      "HV": 16,
+      "K": 128,
+      "V": 128,
+      "pool_size": 32
+    }
+  },
+  {
+    "test_case_id": "perf3",
+    "execution_time_ms": 0.0772987000644207,
+    "params": {
+      "B": 4,
+      "H": 8,
+      "HV": 16,
+      "K": 128,
+      "V": 128,
+      "pool_size": 32
+    }
+  },
+  {
+    "test_case_id": "perf4",
+    "execution_time_ms": 0.0761388099193573,
+    "params": {
+      "B": 8,
+      "H": 8,
+      "HV": 16,
+      "K": 128,
+      "V": 128,
+      "pool_size": 64
+    }
+  },
+  {
+    "test_case_id": "perf5",
+    "execution_time_ms": 0.07765267997980117,
+    "params": {
+      "B": 16,
+      "H": 8,
+      "HV": 16,
+      "K": 128,
+      "V": 128,
+      "pool_size": 64
+    }
+  },
+  {
+    "test_case_id": "perf6",
+    "execution_time_ms": 0.08093888029456138,
+    "params": {
+      "B": 32,
+      "H": 8,
+      "HV": 16,
+      "K": 128,
+      "V": 128,
+      "pool_size": 128
+    }
+  },
+  {
+    "test_case_id": "perf7",
+    "execution_time_ms": 0.07950644992291928,
+    "params": {
+      "B": 64,
+      "H": 8,
+      "HV": 16,
+      "K": 128,
+      "V": 128,
+      "pool_size": 128
+    }
+  },
+  {
+    "test_case_id": "perf8",
+    "execution_time_ms": 0.08047550998628139,
+    "params": {
+      "B": 128,
+      "H": 8,
+      "HV": 16,
+      "K": 128,
+      "V": 128,
+      "pool_size": 256
+    }
+  },
+  {
+    "test_case_id": "perf9",
+    "execution_time_ms": 0.07557707987725734,
+    "params": {
+      "B": 1,
+      "H": 16,
+      "HV": 32,
+      "K": 128,
+      "V": 128,
+      "pool_size": 32
+    }
+  },
+  {
+    "test_case_id": "perf10",
+    "execution_time_ms": 0.07911119014024734,
+    "params": {
+      "B": 32,
+      "H": 16,
+      "HV": 32,
+      "K": 128,
+      "V": 128,
+      "pool_size": 128
+    }
+  }
+]

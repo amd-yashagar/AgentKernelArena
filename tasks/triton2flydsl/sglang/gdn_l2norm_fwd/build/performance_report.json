@@ -1,0 +1,66 @@
+[
+  {
+    "test_case_id": "perf1",
+    "execution_time_ms": 0.0541849397867918,
+    "params": {
+      "rows": 2048,
+      "D": 128
+    }
+  },
+  {
+    "test_case_id": "perf2",
+    "execution_time_ms": 0.05246414992958307,
+    "params": {
+      "rows": 16384,
+      "D": 128
+    }
+  },
+  {
+    "test_case_id": "perf3",
+    "execution_time_ms": 0.056742300018668174,
+    "params": {
+      "rows": 131072,
+      "D": 128
+    }
+  },
+  {
+    "test_case_id": "perf4",
+    "execution_time_ms": 0.05678608994930982,
+    "params": {
+      "rows": 245760,
+      "D": 128
+    }
+  },
+  {
+    "test_case_id": "perf5",
+    "execution_time_ms": 0.05293371014297008,
+    "params": {
+      "rows": 4096,
+      "D": 64
+    }
+  },
+  {
+    "test_case_id": "perf6",
+    "execution_time_ms": 0.052015920132398606,
+    "params": {
+      "rows": 4096,
+      "D": 256
+    }
+  },
+  {
+    "test_case_id": "perf7",
+    "execution_time_ms": 0.05124698001891374,
+    "params": {
+      "rows": 1024,
+      "D": 512
+    }
+  },
+  {
+    "test_case_id": "perf8",
+    "execution_time_ms": 0.045135550163686276,
+    "params": {
+      "rows": 1024,
+      "D": 1024
+    }
+  }
+]

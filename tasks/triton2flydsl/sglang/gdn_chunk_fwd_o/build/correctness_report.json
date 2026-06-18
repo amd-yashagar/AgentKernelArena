@@ -1,0 +1,119 @@
+{
+  "status": "ok",
+  "error": null,
+  "num_shapes": 8,
+  "details": [
+    {
+      "shape_id": 1,
+      "shape": [
+        1,
+        1024,
+        8,
+        16,
+        128,
+        128
+      ],
+      "max_diff": 0.0078125,
+      "err_ratio": 0.0,
+      "passed": true
+    },
+    {
+      "shape_id": 2,
+      "shape": [
+        2,
+        512,
+        8,
+        16,
+        128,
+        128
+      ],
+      "max_diff": 0.015625,
+      "err_ratio": 0.0,
+      "passed": true
+    },
+    {
+      "shape_id": 3,
+      "shape": [
+        1,
+        2048,
+        8,
+        16,
+        128,
+        128
+      ],
+      "max_diff": 0.015625,
+      "err_ratio": 0.0,
+      "passed": true
+    },
+    {
+      "shape_id": 4,
+      "shape": [
+        1,
+        1024,
+        16,
+        32,
+        128,
+        128
+      ],
+      "max_diff": 0.015625,
+      "err_ratio": 0.0,
+      "passed": true
+    },
+    {
+      "shape_id": 5,
+      "shape": [
+        4,
+        256,
+        8,
+        16,
+        128,
+        128
+      ],
+      "max_diff": 0.0078125,
+      "err_ratio": 0.0,
+      "passed": true
+    },
+    {
+      "shape_id": 6,
+      "shape": [
+        1,
+        1024,
+        16,
+        16,
+        128,
+        128
+      ],
+      "max_diff": 0.015625,
+      "err_ratio": 0.0,
+      "passed": true
+    },
+    {
+      "shape_id": 7,
+      "shape": [
+        1,
+        4096,
+        8,
+        16,
+        128,
+        128
+      ],
+      "max_diff": 0.03125,
+      "err_ratio": 0.0,
+      "passed": true
+    },
+    {
+      "shape_id": 8,
+      "shape": [
+        1,
+        1024,
+        8,
+        16,
+        128,
+        64
+      ],
+      "max_diff": 0.00390625,
+      "err_ratio": 0.0,
+      "passed": true
+    }
+  ]
+}
