@@ -1,0 +1,90 @@
+[
+  {
+    "test_case_id": "perf1",
+    "execution_time_ms": 0.7389571666717529,
+    "params": {
+      "M": 16,
+      "K": 2048,
+      "I": 512,
+      "E": 256,
+      "topk": 8
+    }
+  },
+  {
+    "test_case_id": "perf2",
+    "execution_time_ms": 1.0045561373233796,
+    "params": {
+      "M": 64,
+      "K": 2048,
+      "I": 512,
+      "E": 256,
+      "topk": 8
+    }
+  },
+  {
+    "test_case_id": "perf3",
+    "execution_time_ms": 1.1259417374928793,
+    "params": {
+      "M": 256,
+      "K": 2048,
+      "I": 512,
+      "E": 256,
+      "topk": 8
+    }
+  },
+  {
+    "test_case_id": "perf4",
+    "execution_time_ms": 1.2748499313990276,
+    "params": {
+      "M": 1024,
+      "K": 2048,
+      "I": 512,
+      "E": 256,
+      "topk": 8
+    }
+  },
+  {
+    "test_case_id": "perf5",
+    "execution_time_ms": 1.6108438968658447,
+    "params": {
+      "M": 2048,
+      "K": 2048,
+      "I": 512,
+      "E": 256,
+      "topk": 8
+    }
+  },
+  {
+    "test_case_id": "perf6",
+    "execution_time_ms": 2.210506876309713,
+    "params": {
+      "M": 4096,
+      "K": 2048,
+      "I": 512,
+      "E": 256,
+      "topk": 8
+    }
+  },
+  {
+    "test_case_id": "perf7",
+    "execution_time_ms": 1.0923001289367675,
+    "params": {
+      "M": 1024,
+      "K": 2048,
+      "I": 512,
+      "E": 128,
+      "topk": 8
+    }
+  },
+  {
+    "test_case_id": "perf8",
+    "execution_time_ms": 1.1292827685674032,
+    "params": {
+      "M": 512,
+      "K": 2048,
+      "I": 512,
+      "E": 256,
+      "topk": 4
+    }
+  }
+]
