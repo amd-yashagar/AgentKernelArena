@@ -9,14 +9,16 @@ concatenation of a gate half ``x`` and an up-projection half ``y``, computes
 op ``aiter.silu_and_mul_quant``:
 
   act[i, :]              = silu(x[i, :]) * y[i, :]                  (fp32)
-  scale[i, g]            = max(amax(|act_group[i, g]|), 1e-10) / 448
+  scale[i, g]            = max(amax(|act_group[i, g]|), 1e-10) / dtype_max
   out[i, g, :]           = round_to_fp8(act_group[i, g] / scale[i, g])
 
 When ``limit > 0`` the GPT-OSS clamp is applied (``x`` upper-clamped to
 ``limit``, ``y`` clamped to ``[-limit, limit]``) before the activation. The SiLU
-and gate multiply are evaluated in fp32 and the per-group FP8 quant is the
-standard group path (OCP ``float8_e4m3fn``, finite max 448,
-round-to-nearest-even); the floor 1e-10 keeps an all-zero group's scale finite.
+and gate multiply are evaluated in fp32 and the per-group FP8 quant uses an
+arch-selected FP8 type (``aiter/utility/dtypes.py``): gfx942/CDNA3 uses
+``float8_e4m3fnuz`` (finite max 240), gfx950/CDNA4 uses ``float8_e4m3fn``
+(finite max 448), round-to-nearest-even; the floor 1e-10 keeps an all-zero
+group's scale finite.
 
 forward(input) -> (output_fp8, scale_fp32)
   input  : [m, 2 * d]            bf16
@@ -27,8 +29,18 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-# gfx950 / CDNA4 OCP FP8 (E4M3, finite max 448).
-_FP8_DTYPE = torch.float8_e4m3fn
+def _amd_fp8_dtype():
+    """fp8 storage dtype the matching aiter op uses on the active GPU arch,
+    mirroring ``aiter/utility/dtypes.py``: gfx942/CDNA3 -> ``float8_e4m3fnuz``
+    (finite max 240); gfx950/CDNA4 and others -> ``float8_e4m3fn`` (max 448)."""
+    try:
+        arch = torch.cuda.get_device_properties(0).gcnArchName.split(":")[0]
+    except Exception:
+        arch = ""
+    return torch.float8_e4m3fnuz if arch == "gfx942" else torch.float8_e4m3fn
+
+
+_FP8_DTYPE = _amd_fp8_dtype()
 
 
 class Model(nn.Module):

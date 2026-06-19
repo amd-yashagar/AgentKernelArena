@@ -19,7 +19,19 @@ handling apples-to-apple against this reference.
 import torch
 import torch.nn as nn
 
-FP8_DTYPE = torch.float8_e4m3fn
+
+def _amd_fp8_dtype():
+    """fp8 storage dtype the matching aiter op uses on the active GPU arch,
+    mirroring ``aiter/utility/dtypes.py``: gfx942/CDNA3 -> ``float8_e4m3fnuz``
+    (finite max 240); gfx950/CDNA4 and others -> ``float8_e4m3fn`` (max 448)."""
+    try:
+        arch = torch.cuda.get_device_properties(0).gcnArchName.split(":")[0]
+    except Exception:
+        arch = ""
+    return torch.float8_e4m3fnuz if arch == "gfx942" else torch.float8_e4m3fn
+
+
+FP8_DTYPE = _amd_fp8_dtype()
 
 
 def pertoken_quant(x, quant_dtype=FP8_DTYPE):

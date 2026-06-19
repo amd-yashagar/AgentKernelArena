@@ -21,9 +21,20 @@ accumulation order.
 import torch
 import torch.nn as nn
 
-# log2(F8E4M3FN_MAX) -> 448 is the e4m3fn saturation magnitude used as the
-# per-block scale divisor on gfx950.
-_FP8_MAX = 448.0
+def _amd_fp8_dtype():
+    """fp8 storage dtype the matching aiter op uses on the active GPU arch,
+    mirroring ``aiter/utility/dtypes.py``: gfx942/CDNA3 -> ``float8_e4m3fnuz``
+    (finite max 240); gfx950/CDNA4 and others -> ``float8_e4m3fn`` (max 448)."""
+    try:
+        arch = torch.cuda.get_device_properties(0).gcnArchName.split(":")[0]
+    except Exception:
+        arch = ""
+    return torch.float8_e4m3fnuz if arch == "gfx942" else torch.float8_e4m3fn
+
+
+# Arch-selected FP8 type and its saturation magnitude (per-block scale divisor).
+_FP8_DTYPE = _amd_fp8_dtype()
+_FP8_MAX = float(torch.finfo(_FP8_DTYPE).max)
 _BLOCK_N = 128
 _BLOCK_K = 128
 
@@ -38,7 +49,7 @@ def _quantize_rowwise_1x128(a):
     af = a.float().view(m, scale_k, _BLOCK_K)
     amax = af.abs().amax(dim=-1)
     scale = (amax / _FP8_MAX).clamp_min(1e-12)
-    q = (af / scale.unsqueeze(-1)).view(m, k).to(torch.float8_e4m3fn)
+    q = (af / scale.unsqueeze(-1)).view(m, k).to(_FP8_DTYPE)
     return q, scale
 
 
@@ -59,7 +70,7 @@ def _quantize_blockwise_128x128(w):
     amax = blocks.abs().amax(dim=(1, 3))
     scale = (amax / _FP8_MAX).clamp_min(1e-12)
     scale_full = scale.repeat_interleave(_BLOCK_N, 0).repeat_interleave(_BLOCK_K, 1)
-    q = (wf / scale_full).to(torch.float8_e4m3fn)[:n, :k].contiguous()
+    q = (wf / scale_full).to(_FP8_DTYPE)[:n, :k].contiguous()
     return q, scale
 
 

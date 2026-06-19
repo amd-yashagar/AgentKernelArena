@@ -29,9 +29,20 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-# torch.finfo(float8_e4m3fn).max == 448 is the e4m3fn saturation magnitude used
-# as the per-block scale divisor on gfx950.
-_FP8_MAX = 448.0
+def _amd_fp8_dtype():
+    """fp8 storage dtype the matching aiter op uses on the active GPU arch,
+    mirroring ``aiter/utility/dtypes.py``: gfx942/CDNA3 -> ``float8_e4m3fnuz``
+    (finite max 240); gfx950/CDNA4 and others -> ``float8_e4m3fn`` (max 448)."""
+    try:
+        arch = torch.cuda.get_device_properties(0).gcnArchName.split(":")[0]
+    except Exception:
+        arch = ""
+    return torch.float8_e4m3fnuz if arch == "gfx942" else torch.float8_e4m3fn
+
+
+# Arch-selected FP8 type and its saturation magnitude (per-block scale divisor).
+_FP8_DTYPE = _amd_fp8_dtype()
+_FP8_MAX = float(torch.finfo(_FP8_DTYPE).max)
 _BLOCK = 128
 
 
@@ -45,7 +56,7 @@ def _quantize_act_1x128(a):
     amax = af.abs().amax(dim=-1)
     scale = amax / _FP8_MAX
     scale = torch.where(scale == 0, torch.ones_like(scale), scale)
-    q = (af / scale.unsqueeze(-1)).view(token, d).to(torch.float8_e4m3fn)
+    q = (af / scale.unsqueeze(-1)).view(token, d).to(_FP8_DTYPE)
     return q, scale
 
 
@@ -64,7 +75,7 @@ def _quantize_weight_128x128(w):
     amax = blocks.abs().amax(dim=-1)
     scale = amax / _FP8_MAX
     scale = torch.where(scale == 0, torch.ones_like(scale), scale)
-    q = (blocks / scale.unsqueeze(-1)).to(torch.float8_e4m3fn)
+    q = (blocks / scale.unsqueeze(-1)).to(_FP8_DTYPE)
     q = (
         q.view(e, nb1, nb2, _BLOCK, _BLOCK)
         .permute(0, 1, 3, 2, 4)
@@ -102,7 +113,7 @@ def _requant_act_1x128(a):
     af = a.float().reshape(*lead, nblk, _BLOCK)
     amax = af.abs().amax(dim=-1, keepdim=True)
     scale = (amax / _FP8_MAX).clamp_min(1e-12)
-    q = (af / scale).to(torch.float8_e4m3fn).float() * scale
+    q = (af / scale).to(_FP8_DTYPE).float() * scale
     return q.reshape(*lead, d)
 
 
@@ -142,9 +153,17 @@ def _grouped_gemm_stage2(acts, weights, topk_ids, topk_weights):
 
 
 def route_topk(logits, topk):
-    """Softmax router + top-k with renormalized weights. Shared by the harness."""
+    """Softmax router + top-k with renormalized weights. Shared by the harness.
+
+    Ties are broken by ascending expert index via a stable descending sort. The
+    bf16 gate produces many duplicate logits across the large expert count, and a
+    nondeterministic top-k tie-break would let the reference and the runtime op
+    select different experts; the stable order keeps both routings identical.
+    """
     gate = torch.softmax(logits.float(), dim=-1)
-    weights, ids = torch.topk(gate, topk, dim=-1)
+    order = torch.sort(gate, dim=-1, descending=True, stable=True).indices
+    ids = order[..., :topk]
+    weights = torch.gather(gate, -1, ids)
     weights = weights / weights.sum(dim=-1, keepdim=True)
     return weights.float(), ids.to(torch.int32)
 

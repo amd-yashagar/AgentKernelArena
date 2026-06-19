@@ -17,6 +17,9 @@ performance_command:
 
 task_type: triton2flydsl
 
+supported_archs:
+  - gfx950  # MXFP4 scaled-dot (tl.dot_scaled) needs CDNA4 scaled-MFMA; not runnable on gfx942/CDNA3
+
 task_result_template: null
 
 prompt:

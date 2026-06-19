@@ -1,4 +1,6 @@
 task_type: torch2flydsl
+supported_archs:
+  - gfx950  # FP4/MX scaled-MFMA is CDNA4-only; not runnable on gfx942/CDNA3
 source_file_path:
   - model.py
 harness_path: test_kernel_harness.py

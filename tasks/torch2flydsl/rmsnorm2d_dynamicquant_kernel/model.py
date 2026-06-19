@@ -9,15 +9,17 @@ per-channel weight, then dynamically quantizes the normalized result to FP8
 ``group_size=0``):
 
   normed[i, :] = x[i, :] * rsqrt(mean(x[i, :]^2) + eps) * weight   (fp32)
-  scale[i]     = amax(|normed[i, :]|) / 448         (fp32; all-zero row -> 1)
+  scale[i]     = amax(|normed[i, :]|) / dtype_max    (fp32; all-zero row -> 1)
   out[i, :]    = round_to_fp8(normed[i, :] / scale[i])
 
 AMD-runtime semantics (option-b): the fused CK kernel keeps the RMSNorm result
 in fp32 registers (fp32 mean-of-squares reduction and weight multiply, NO
 intermediate bf16 truncation) and quantizes directly from fp32, then the
-per-token FP8 quant is the standard ``pertoken_quant`` path (OCP
-``float8_e4m3fn``, finite max 448, round-to-nearest-even). The returned scale is
-fp32 of shape ``[m, 1]``.
+per-token FP8 quant is the standard ``pertoken_quant`` path with an
+arch-selected FP8 type (``aiter/utility/dtypes.py``): gfx942/CDNA3 uses
+``float8_e4m3fnuz`` (finite max 240), gfx950/CDNA4 uses ``float8_e4m3fn``
+(finite max 448), round-to-nearest-even. The returned scale is fp32 of shape
+``[m, 1]``.
 
 forward(input, weight) -> (output_fp8, scale_fp32)
   input  : [m, n]   bf16
@@ -28,8 +30,18 @@ forward(input, weight) -> (output_fp8, scale_fp32)
 import torch
 import torch.nn as nn
 
-# gfx950 / CDNA4 OCP FP8 (E4M3, finite max 448).
-_FP8_DTYPE = torch.float8_e4m3fn
+def _amd_fp8_dtype():
+    """fp8 storage dtype the matching aiter op uses on the active GPU arch,
+    mirroring ``aiter/utility/dtypes.py``: gfx942/CDNA3 -> ``float8_e4m3fnuz``
+    (finite max 240); gfx950/CDNA4 and others -> ``float8_e4m3fn`` (max 448)."""
+    try:
+        arch = torch.cuda.get_device_properties(0).gcnArchName.split(":")[0]
+    except Exception:
+        arch = ""
+    return torch.float8_e4m3fnuz if arch == "gfx942" else torch.float8_e4m3fn
+
+
+_FP8_DTYPE = _amd_fp8_dtype()
 
 
 class Model(nn.Module):

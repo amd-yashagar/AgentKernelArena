@@ -27,20 +27,31 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-# torch.finfo(float8_e4m3fn).max == 448 is the e4m3fn saturation magnitude used
-# as the per-token scale divisor on gfx950.
-_FP8_MAX = 448.0
+def _amd_fp8_dtype():
+    """fp8 storage dtype the matching aiter op uses on the active GPU arch,
+    mirroring ``aiter/utility/dtypes.py``: gfx942/CDNA3 -> ``float8_e4m3fnuz``
+    (finite max 240); gfx950/CDNA4 and others -> ``float8_e4m3fn`` (max 448)."""
+    try:
+        arch = torch.cuda.get_device_properties(0).gcnArchName.split(":")[0]
+    except Exception:
+        arch = ""
+    return torch.float8_e4m3fnuz if arch == "gfx942" else torch.float8_e4m3fn
+
+
+# Arch-selected FP8 type and its saturation magnitude (per-token scale divisor).
+_FP8_DTYPE = _amd_fp8_dtype()
+_FP8_MAX = float(torch.finfo(_FP8_DTYPE).max)
 
 
 def _pertoken_dequant(x):
     """FP8 per-token (per last-dim row) quantize+dequantize, returning the fp32
-    values the FP8 GEMM sees. Matches ``aiter.pertoken_quant`` (amax/448,
-    e4m3fn round, multiply back)."""
+    values the FP8 GEMM sees. Matches ``aiter.pertoken_quant`` (amax/dtype_max,
+    arch-selected e4m3 round, multiply back)."""
     xf = x.float()
     amax = xf.abs().amax(dim=-1, keepdim=True)
     scale = amax / _FP8_MAX
     scale = torch.where(scale == 0, torch.ones_like(scale), scale)
-    return (xf / scale).to(torch.float8_e4m3fn).float() * scale
+    return (xf / scale).to(_FP8_DTYPE).float() * scale
 
 
 def _grouped_gemm_stage1(acts, weights, topk_ids):
@@ -71,9 +82,17 @@ def _grouped_gemm_stage2_sum(acts, weights, topk_ids):
 
 
 def route_topk(logits, topk):
-    """Softmax router + top-k with renormalized weights. Shared by the harness."""
+    """Softmax router + top-k with renormalized weights. Shared by the harness.
+
+    Ties are broken by ascending expert index via a stable descending sort. The
+    bf16 gate produces many duplicate logits across the large expert count, and a
+    nondeterministic top-k tie-break would let the reference and the runtime op
+    select different experts; the stable order keeps both routings identical.
+    """
     gate = torch.softmax(logits.float(), dim=-1)
-    weights, ids = torch.topk(gate, topk, dim=-1)
+    order = torch.sort(gate, dim=-1, descending=True, stable=True).indices
+    ids = order[..., :topk]
+    weights = torch.gather(gate, -1, ids)
     weights = weights / weights.sum(dim=-1, keepdim=True)
     return weights.float(), ids.to(torch.int32)
 

@@ -206,6 +206,15 @@ def run_benchmark(warmup=5, iters=20, verbose=True):
 
 
 if __name__ == "__main__":
+    try:
+        import torch as _t
+        _arch = _t.cuda.get_device_properties(0).gcnArchName.split(":")[0]
+    except Exception:
+        _arch = ""
+    if _arch != "gfx950":
+        print(f"SKIPPED: gfx950-only task on arch={_arch or 'unknown'} (FP4/MX scaled-MFMA requires CDNA4/gfx950)")
+        print("correctness: skip")
+        sys.exit(0)
     parser = argparse.ArgumentParser(description="torch2flydsl moe harness")
     parser.add_argument("--correctness", action="store_true")
     parser.add_argument("--benchmark", action="store_true")

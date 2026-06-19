@@ -19,8 +19,20 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-# e4m3fn saturation magnitude used as the per-token scale divisor on gfx950.
-_FP8_MAX = 448.0
+def _amd_fp8_dtype():
+    """fp8 storage dtype the matching aiter op uses on the active GPU arch,
+    mirroring ``aiter/utility/dtypes.py``: gfx942/CDNA3 -> ``float8_e4m3fnuz``
+    (finite max 240); gfx950/CDNA4 and others -> ``float8_e4m3fn`` (max 448)."""
+    try:
+        arch = torch.cuda.get_device_properties(0).gcnArchName.split(":")[0]
+    except Exception:
+        arch = ""
+    return torch.float8_e4m3fnuz if arch == "gfx942" else torch.float8_e4m3fn
+
+
+# Arch-selected FP8 type and its saturation magnitude (per-token scale divisor).
+_FP8_DTYPE = _amd_fp8_dtype()
+_FP8_MAX = float(torch.finfo(_FP8_DTYPE).max)
 
 
 def _quantize_rowwise(t):
@@ -31,7 +43,7 @@ def _quantize_rowwise(t):
     tf = t.float()
     amax = tf.abs().amax(dim=-1, keepdim=True)
     scale = (amax / _FP8_MAX).clamp_min(1e-12)
-    q = (tf / scale).to(torch.float8_e4m3fn)
+    q = (tf / scale).to(_FP8_DTYPE)
     return q, scale
 
 

@@ -258,4 +258,13 @@ def main():
 
 
 if __name__ == "__main__":
+    try:
+        import torch as _t
+        _arch = _t.cuda.get_device_properties(0).gcnArchName.split(":")[0]
+    except Exception:
+        _arch = ""
+    if _arch != "gfx950":
+        print(f"SKIPPED: gfx950-only task on arch={_arch or 'unknown'} (MXFP4 scaled-dot requires CDNA4/gfx950)")
+        print("correctness: skip")
+        sys.exit(0)
     main()

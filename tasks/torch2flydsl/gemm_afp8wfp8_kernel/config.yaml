@@ -1,4 +1,6 @@
 task_type: torch2flydsl
+supported_archs:
+  - gfx950  # MXFP8 GEMM uses triton scaled-dot (DotScaleOp); scaled-MFMA is CDNA4-only, unsupported on gfx942/CDNA3
 source_file_path:
   - model.py
 harness_path: test_kernel_harness.py

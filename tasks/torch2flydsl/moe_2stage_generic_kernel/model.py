@@ -53,9 +53,17 @@ def _grouped_gemm_stage2(acts, weights, topk_ids, topk_weights):
 
 
 def route_topk(logits, topk):
-    """Softmax router + top-k with renormalized weights. Shared by the harness."""
+    """Softmax router + top-k with renormalized weights. Shared by the harness.
+
+    Ties are broken by ascending expert index via a stable descending sort. The
+    bf16 gate produces many duplicate logits across the large expert count, and a
+    nondeterministic top-k tie-break would let the reference and the runtime op
+    select different experts; the stable order keeps both routings identical.
+    """
     gate = torch.softmax(logits.float(), dim=-1)
-    weights, ids = torch.topk(gate, topk, dim=-1)
+    order = torch.sort(gate, dim=-1, descending=True, stable=True).indices
+    ids = order[..., :topk]
+    weights = torch.gather(gate, -1, ids)
     weights = weights / weights.sum(dim=-1, keepdim=True)
     return weights.float(), ids.to(torch.int32)
 
